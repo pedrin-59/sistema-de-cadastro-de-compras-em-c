@@ -8,7 +8,7 @@
 
 /* Apenas pra rodar no VS Code*/
 #pragma comment(lib, "user32.lib")
-#pragma comment(lib, "gdi32.lib")
+
 
 #define ID_PRODUTO 101
 #define ID_QTD     102
