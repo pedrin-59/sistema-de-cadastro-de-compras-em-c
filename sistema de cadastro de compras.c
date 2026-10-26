@@ -6,9 +6,7 @@
 #include <math.h>
 #include <ctype.h>
 
-/* Apenas pra rodar no VS Code*/
 #pragma comment(lib, "user32.lib")
-
 
 #define ID_PRODUTO 101
 #define ID_QTD     102
@@ -24,14 +22,12 @@ HWND campoPreco;
 HWND campoResultado;
 HWND campoLista;
 
-// Ler numeros decimais
 int lerDecimal(HWND campo, double *valor) {
   char texto[100];
   char *fim;
 
   GetWindowTextA(campo, texto, sizeof(texto));
 
-  // Aceitar virgula ou ponto decimal
   for (int i = 0; texto[i]; i++) {
     if (texto[i] == ',')
       texto[i] = '.';
@@ -47,7 +43,6 @@ int lerDecimal(HWND campo, double *valor) {
   return *fim == '\0';
 }
 
-// Ler quantidade inteira
 int lerQuantidade(int *quantidade) {
   char texto[100];
   char *fim;
@@ -68,7 +63,6 @@ int lerQuantidade(int *quantidade) {
   return 1;
 }
 
-// Salvar uma compra
 void salvarCompra() {
   char produto[100];
   char mensagem[200];
@@ -117,7 +111,6 @@ void salvarCompra() {
     return;
   }
 
-  // Gravar os dados separados por ;
   int gravou = fprintf(arquivo,
     "%s;%d;%.2f;%.2f\n",
     produto, quantidade, preco, total);
@@ -139,7 +132,6 @@ void salvarCompra() {
     "Sucesso", MB_OK | MB_ICONINFORMATION);
 }
 
-// Mostrar todas as compras do arquivo
 void mostrarCompras() {
   FILE *arquivo = fopen(ARQUIVO, "r");
   if (arquivo == NULL) {
@@ -157,7 +149,6 @@ void mostrarCompras() {
   double acumulado = 0;
   int contador = 0;
 
-  // Limpar a lista
   SendMessageA(campoLista, LB_RESETCONTENT, 0, 0);
 
   while (fgets(linha, sizeof(linha), arquivo)) {
@@ -184,7 +175,6 @@ void mostrarCompras() {
   SetWindowTextA(campoResultado, texto);
 }
 
-// Limpar campos
 void limparCampos() {
   SetWindowTextA(campoProduto, "");
   SetWindowTextA(campoQtd, "");
@@ -193,7 +183,6 @@ void limparCampos() {
   SendMessageA(campoLista, LB_RESETCONTENT, 0, 0);
 }
 
-// Funcao principal da janela
 LRESULT CALLBACK Janela(
   HWND hwnd, UINT msg,
   WPARAM wParam, LPARAM lParam) {
@@ -284,7 +273,6 @@ LRESULT CALLBACK Janela(
   return 0;
 }
 
-// Funcao principal do Windows
 int WINAPI WinMain(
   HINSTANCE hInstance,
   HINSTANCE hPrevInstance,
